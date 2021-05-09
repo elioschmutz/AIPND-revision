@@ -2,8 +2,8 @@
 # -*- coding: utf-8 -*-
 # */AIPND-revision/intropyproject-classify-pet-images/calculates_results_stats.py
 #
-# PROGRAMMER:
-# DATE CREATED:
+# PROGRAMMER: Elio Schmutz
+# DATE CREATED: 2021-05-08
 # REVISED DATE:
 # PURPOSE: Create a function calculates_results_stats that calculates the
 #          statistics of the results of the programrun using the classifier's model
@@ -70,4 +70,43 @@ def calculates_results_stats(results_dic):
     """
     # Replace None with the results_stats_dic dictionary that you created with
     # this function
-    return None
+
+    # pet_image_labels, classifier_labels, is_image_classifier_matches, \
+    #     is_dog_images, is_classifier_dog_images = zip(*list(results_dic.values()))
+
+    n_images = len((results_dic.keys()))
+    n_match = 0
+    n_dog_images = 0
+    n_correct_dogs = 0
+    n_correct_notdogs = 0
+    n_correct_breed = 0
+
+    for result in results_dic.values():
+        pet_image_label, classifier_label, is_match, is_dog_image, is_classifier_dog_image = result
+        n_match += is_match
+        n_dog_images += is_dog_image
+        if is_dog_image and is_match:
+                n_correct_breed += 1
+
+        if is_dog_image and is_classifier_dog_image:
+            n_correct_dogs += 1
+
+        if not is_dog_image and not is_classifier_dog_image:
+            n_correct_notdogs += 1
+
+    n_notdogs_img = n_images - n_dog_images
+    results_stats_dic = {
+        'n_images': n_images,
+        'n_dogs_img': n_dog_images,
+        'n_notdogs_img': n_notdogs_img,
+        'n_match': n_match,
+        'n_correct_dogs': n_correct_dogs,
+        'n_correct_notdogs': n_correct_notdogs,
+        'n_correct_breed': n_correct_breed,
+        'pct_match': n_match / n_images * 100,
+        'pct_correct_dogs': n_correct_dogs / n_dog_images * 100,
+        'pct_correct_breed': n_correct_breed / n_dog_images * 100,
+        'pct_correct_notdogs': n_correct_notdogs / n_notdogs_img * 100 if n_notdogs_img else 0,
+    }
+
+    return results_stats_dic

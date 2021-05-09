@@ -2,8 +2,8 @@
 # -*- coding: utf-8 -*-
 # */AIPND-revision/intropyproject-classify-pet-images/print_results.py
 #
-# PROGRAMMER:
-# DATE CREATED:
+# PROGRAMMER: Elio Schmutz
+# DATE CREATED: 2021-05-08
 # REVISED DATE:
 # PURPOSE: Create a function print_results that prints the results statistics
 #          from the results statistics dictionary (results_stats_dic). It
@@ -62,5 +62,79 @@ def print_results(results_dic, results_stats_dic, model,
     Returns:
            None - simply printing results.
     """
-    None
+    print("CNN model architecture: {}".format(model))
 
+    print("\n")
+    print("General statistics:")
+    print("-"*20)
+    print("Total images: {}".format(results_stats_dic['n_images']))
+    print("Total dog images: {}".format(results_stats_dic['n_dogs_img']))
+    print("Total not dog images: {}".format(results_stats_dic['n_notdogs_img']))
+
+    print("\n")
+    print("Match statistics:")
+    print("-"*20)
+    print("Total matches: {} ({})".format(results_stats_dic['n_match'], results_stats_dic['pct_match']))
+    print("Total correct dogs: {} ({}%)".format(results_stats_dic['n_correct_dogs'], results_stats_dic['pct_correct_dogs']))
+    print("Total correct no dogs: {} ({}%)".format(results_stats_dic['n_correct_notdogs'], results_stats_dic['pct_correct_notdogs']))
+    print("Total correct breeds: {} ({}%)".format(results_stats_dic['n_correct_breed'], results_stats_dic['pct_correct_breed']))
+
+    correct_dog_names = []
+    correct_nodog_names = []
+    correct_breed_names = []
+    incorrect_dog_names = []
+    incorrect_nodog_names = []
+    incorrect_breed_names = []
+
+    for key, values in results_dic.items():
+        pet_image_label, classifier_label, is_match, is_dog_image, is_classifier_dog_image = values
+        item = [key, pet_image_label, classifier_label]
+        if is_dog_image and is_match:
+            correct_breed_names.append(item)
+        elif is_dog_image and is_classifier_dog_image and not is_match:
+            incorrect_breed_names.append(item)
+
+        if is_dog_image and is_classifier_dog_image:
+            correct_dog_names.append(item)
+        elif is_dog_image and not is_classifier_dog_image:
+            incorrect_dog_names.append(item)
+
+        if not is_dog_image and not is_classifier_dog_image:
+            correct_nodog_names.append(item)
+        elif not is_dog_image and is_classifier_dog_image:
+            incorrect_nodog_names.append(item)
+
+    print("\n")
+    print("Correctly classified images:")
+    print("-"*20)
+    print("Correct dog names:")
+    for filename, pet_image_label, classifier_label in correct_dog_names:
+        print("{} ({})".format(pet_image_label, filename))
+
+    print("\n")
+    print("Correct nodog names:")
+    for filename, pet_image_label, classifier_label in correct_nodog_names:
+        print("{} ({})".format(pet_image_label, filename))
+
+    print("\n")
+    print("Correct breed names:")
+    for filename, pet_image_label, classifier_label in correct_breed_names:
+        print("{} ({})".format(pet_image_label, filename))
+
+    if print_incorrect_dogs and len(incorrect_dog_names):
+        print("\n")
+        print("Incorrectly classified dog images:")
+        for filename, pet_image_label, classifier_label in incorrect_dog_names:
+            print("{} ({}) => classified label: {}".format(pet_image_label, filename, classifier_label))
+
+    if print_incorrect_dogs and len(incorrect_nodog_names):
+        print("\n")
+        print("Incorrectly classified nodog images:")
+        for filename, pet_image_label, classifier_label in incorrect_nodog_names:
+            print("{} ({}) => classified label: {}".format(pet_image_label, filename, classifier_label))
+
+    if print_incorrect_breed and len(incorrect_breed_names):
+        print("\n")
+        print("Incorrectly classified breed images:")
+        for filename, pet_image_label, classifier_label in incorrect_breed_names:
+            print("{} ({}) => classified label: {}".format(pet_image_label, filename, classifier_label))
