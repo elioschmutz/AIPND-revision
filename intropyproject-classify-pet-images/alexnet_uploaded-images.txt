@@ -1,0 +1,94 @@
+Command Line Arguments:
+     dir = uploaded_images/ 
+    arch = alexnet 
+ dogfile = dognames.txt
+
+Pet Image Label Dictionary has 4 key-value pairs.
+Below are 4 of them:
+ 1 key:                 white_wolf.jpg  label:                 white wolf
+ 2 key:                 lemon_tree.jpg  label:                 lemon tree
+ 3 key:        golden_retriever_01.jpg  label:           golden retriever
+ 4 key:        golden_retriever_02.jpg  label:           golden retriever
+
+     MATCH:
+
+                white_wolf.jpg: 
+Real:                 white wolf   Classifier: white wolf, Arctic wolf, Canis lupus tundrarum
+
+       golden_retriever_01.jpg: 
+Real:           golden retriever   Classifier:               golden retriever
+
+       golden_retriever_02.jpg: 
+Real:           golden retriever   Classifier:               golden retriever
+
+ NOT A MATCH:
+
+                lemon_tree.jpg: 
+Real:                 lemon tree   Classifier:                       rapeseed
+
+# Total Images 4 # Matches: 3 # NOT Matches: 1
+
+     MATCH:
+
+                white_wolf.jpg: 
+Real:                 white wolf   Classifier: white wolf, Arctic wolf, Canis lupus tundrarum  
+PetLabelDog: 0  ClassLabelDog: 0
+
+       golden_retriever_01.jpg: 
+Real:           golden retriever   Classifier:               golden retriever  
+PetLabelDog: 1  ClassLabelDog: 1
+
+       golden_retriever_02.jpg: 
+Real:           golden retriever   Classifier:               golden retriever  
+PetLabelDog: 1  ClassLabelDog: 1
+
+ NOT A MATCH:
+
+                lemon_tree.jpg: 
+Real:                 lemon tree   Classifier:                       rapeseed  
+PetLabelDog: 0  ClassLabelDog: 0
+
+# Total Images 4 # Matches: 3 # NOT Matches: 1
+
+ ** Statistics from calculates_results_stats() function:
+N Images:  4  N Dog Images:  2  N NotDog Images:  2 
+Pct Corr dog: 100.0 Pct Corr NOTdog: 100.0  Pct Corr Breed: 100.0
+
+ ** Check Statistics - calculated from this function as a check:
+N Images:  4  N Dog Images:  2  N NotDog Images:  2 
+Pct Corr dog: 100.0 Pct Corr NOTdog: 100.0  Pct Corr Breed: 100.0
+CNN model architecture: alexnet
+
+
+General statistics:
+--------------------
+Total images: 4
+Total dog images: 2
+Total not dog images: 2
+
+
+Match statistics:
+--------------------
+Total matches: 3 (75.0)
+Total correct dogs: 2 (100.0%)
+Total correct no dogs: 2 (100.0%)
+Total correct breeds: 2 (100.0%)
+
+
+Correctly classified images:
+--------------------
+Correct dog names:
+golden retriever (golden_retriever_01.jpg)
+golden retriever (golden_retriever_02.jpg)
+
+
+Correct nodog names:
+white wolf (white_wolf.jpg)
+lemon tree (lemon_tree.jpg)
+
+
+Correct breed names:
+golden retriever (golden_retriever_01.jpg)
+golden retriever (golden_retriever_02.jpg)
+
+** Total Elapsed Runtime: 0:0:0
